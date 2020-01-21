@@ -4,6 +4,7 @@ Game Dots and boxes with angular 8 , firebase
 to start the app : 
 
 >cd path/of/the/app
+then
 >ng serve
 
 open the app in 2 window
