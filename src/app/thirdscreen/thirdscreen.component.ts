@@ -24,7 +24,12 @@ export class ThirdscreenComponent implements OnInit {
     private router: Router,
     private activatedRoute:ActivatedRoute) 
     { 
-     
+      setInterval(() => {
+        this.reload();
+       
+      }, 1600);
+
+
     }
 
 
@@ -72,10 +77,12 @@ ngOnDestroy()
     console.log('test',this.game)
    
    
-    
+    this.reload();
     setInterval(() => {
       this.reload();
     }, 1600);
+
+    this.getScore();
     }
 
 
@@ -213,14 +220,41 @@ ngOnDestroy()
         }
 
       }
-      this.Finish()
 
+      this.getScore()
+      this.Finish()
+      
       this.x=[]
       this.c=[]
      
     
   }
 
+
+
+  getScore()
+  {
+    for(var i=0;i<this.x.length;i++)
+      {        
+        console.log('getscore',this.x[i].idchecked)
+      
+        if(this.x[i].player==this.game.player1)
+        {this.scorep1 =this.scorep1 +1
+          this.game.scorep1= this.scorep1
+          sessionStorage.setItem('scorep1',this.scorep1)
+         
+       
+        }
+        if(this.x[i].player==this.game.player2)
+        {this.scorep2 =this.scorep2 +1
+          this.game.scorep2= this.scorep2
+          sessionStorage.setItem('scorep2',this.scorep2)
+       
+       }
+    }
+    this.scorep1=0
+    this.scorep2=0
+  }
 
 
           public x1:any
@@ -316,7 +350,8 @@ ngOnDestroy()
               
               }
               else{alert('Wait your turn please!')}
-              
+
+              this.getScore()
               this.firebaseService.updateGame(this.game).then(() => {       
                 console.log('turn2 updated');
                   }, err => {
@@ -324,6 +359,8 @@ ngOnDestroy()
               });
              
               this.getGameByID() 
+              this.reload()
+
             }
             this.reload()
               }
@@ -565,28 +602,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                   var d=id+''+id1
                   this.key=d
                   console.log("id",d)
-                  if(this.game.turn==this.game.player1)
-                  {
-                 /* document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p1")*/
-                  this.p=this.game.player1
-                  var sp1= +this.game.scorep1
-                  this.scorep1=sp1+1
-                  this.game.scorep1=this.scorep1
-                  
-
-                  
-                  }
-                  if(this.game.turn==this.game.player2)
-                  {
-                   /* document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p2")  */             
-                  this.p=this.game.player2
-                  var sp2= +this.game.scorep2
-                  this.scorep2=sp2+1
-
-                  this.game.scorep2=this.scorep2
-                  }
+                 
                   var b={'idchecked':d,'player':this.game.turn}
                   sessionStorage.setItem('checked',JSON.stringify(b))
                
@@ -605,25 +621,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                   var d=id2+''+id22
                   this.key=d
                   console.log("id",d)
-                  if(this.game.turn==this.game.player1)
-                  {
-                  /*document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p1")*/
-                  this.p=this.game.player1
-                  var sp1= +this.game.scorep1
-                  this.scorep1=sp1+1
-                  this.game.scorep1=this.scorep1
-                  }
-                  if(this.game.turn==this.game.player2)
-                  {
-                   /* document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p2")  */             
-                  this.p=this.game.player2
-                  var sp2= +this.game.scorep2
-                  this.scorep2=sp2+1
-                  this.game.scorep2=this.scorep2
-                  
-                  }  
+                 
                  
                   var b={'idchecked':d,'player':this.game.turn}
                   sessionStorage.setItem('checked',JSON.stringify(b))
@@ -641,24 +639,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                   var d=id3+''+id33
                   this.key=d
                   console.log("id",d)
-                  if(this.game.turn==this.game.player1)
-                  {
-                  /*document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p1")*/
-                  this.p=this.game.player1
-                  var sp1= +this.game.scorep1
-                  this.scorep1=sp1+1
-                  this.game.scorep1=this.scorep1
-                  }
-                  if(this.game.turn==this.game.player2)
-                  {
-                  /*  document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p2")    */           
-                  this.p=this.game.player2
-                  var sp2= +this.game.scorep2
-                  this.scorep2=sp2+1
-                  this.game.scorep2=this.scorep2
-                  }
+                
                   var b={'idchecked':d,'player':this.game.turn}
                   sessionStorage.setItem('checked',JSON.stringify(b))
                
@@ -677,25 +658,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                   this.key=d
 
                   console.log("id",d)
-                  if(this.game.turn==this.game.player1)
-                  {
-                 /* document.getElementById(''+d+'').classList.remove("p");
-                  document.getElementById(''+d+'').classList.add("p1")*/
-                  this.p=this.game.player1
-                  var sp1= +this.game.scorep1
-                  this.scorep1=sp1+1
-                  this.game.scorep1=this.scorep1
-                  }
-
-                  if(this.game.turn==this.game.player2)
-                  {
-                   /* document.getElementById(''+d+'').classList.remove("p");
-                    document.getElementById(''+d+'').classList.add("p2")  */             
-                    this.p=this.game.player2
-                    var sp2= +this.game.scorep2
-                    this.scorep2=sp2+1
-                    this.game.scorep2=this.scorep2
-                  }
+                
                   var b={'idchecked':d,'player':this.game.turn}
                   sessionStorage.setItem('checked',JSON.stringify(b))
                 

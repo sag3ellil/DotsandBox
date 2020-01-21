@@ -24,7 +24,7 @@ export class SecondscreenComponent implements OnInit {
               private activatedRoute:ActivatedRoute
               )
                 {
-          
+                  
                 }
 
 
