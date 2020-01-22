@@ -77,12 +77,9 @@ ngOnDestroy()
     console.log('test',this.game)
    
    
-    this.reload();
-    setInterval(() => {
-      this.reload();
-    }, 1600);
+  
 
-    this.getScore();
+    
     }
 
 
@@ -201,7 +198,8 @@ ngOnDestroy()
 
 
      this.getCheckedDB()
-
+     this.scorep1=0
+     this.scorep2=0
       for(var i=0;i<this.x.length;i++)
       {
         
@@ -211,17 +209,29 @@ ngOnDestroy()
         {
         document.getElementById(this.x[i].idchecked).classList.remove("p");
         document.getElementById(this.x[i].idchecked).classList.add("p1")
-        document.getElementById(this.x[i].idchecked).nodeValue=this.x[i].player
+        //score p1
+          this.scorep1 =this.scorep1 +1
+          this.game.scorep1= this.scorep1
+          sessionStorage.setItem('scorep1',this.scorep1)
+
         }
         else if(this.x[i].player==this.game.player2)
         {
         document.getElementById(''+this.x[i].idchecked+'').classList.remove("p");
         document.getElementById(''+this.x[i].idchecked+'').classList.add("p2")
+
+        //score p1
+        this.scorep2 =this.scorep2 +1
+        this.game.scorep2= this.scorep2
+        sessionStorage.setItem('scorep2',this.scorep2)
         }
 
       }
 
-      this.getScore()
+      this.scorep1=0
+      this.scorep2=0
+
+    
       this.Finish()
       
       this.x=[]
@@ -232,29 +242,7 @@ ngOnDestroy()
 
 
 
-  getScore()
-  {
-    for(var i=0;i<this.x.length;i++)
-      {        
-        console.log('getscore',this.x[i].idchecked)
-      
-        if(this.x[i].player==this.game.player1)
-        {this.scorep1 =this.scorep1 +1
-          this.game.scorep1= this.scorep1
-          sessionStorage.setItem('scorep1',this.scorep1)
-         
-       
-        }
-        if(this.x[i].player==this.game.player2)
-        {this.scorep2 =this.scorep2 +1
-          this.game.scorep2= this.scorep2
-          sessionStorage.setItem('scorep2',this.scorep2)
-       
-       }
-    }
-    this.scorep1=0
-    this.scorep2=0
-  }
+ 
 
 
           public x1:any
@@ -337,6 +325,7 @@ ngOnDestroy()
               
 
               var check=  this.Checkbox(line)
+             
               console.log('check',check)
                 this.saveSelectedLine(line,id)
 
@@ -351,7 +340,7 @@ ngOnDestroy()
               }
               else{alert('Wait your turn please!')}
 
-              this.getScore()
+             
               this.firebaseService.updateGame(this.game).then(() => {       
                 console.log('turn2 updated');
                   }, err => {
