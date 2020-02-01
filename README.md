@@ -1,11 +1,12 @@
 # DotsandBox
 Game Dots and boxes with angular 8 , firebase
-
-to start the app : 
+delete node_modules folder
+then :
 
 --cd path/of/the/app
+-- npm install
 
-then
+finally
 
 --ng serve
 
