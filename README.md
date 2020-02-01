@@ -6,6 +6,7 @@ Game Dots and boxes with angular 8 , firebase
 then :
 
 --cd path/of/the/app
+
 -- npm install
 
 finally
