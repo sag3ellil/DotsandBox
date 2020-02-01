@@ -1,7 +1,7 @@
 # DotsandBox
 Game Dots and boxes with angular 8 , firebase
 
---delete node_modules folder
+-delete node_modules folder
 
 then :
 
