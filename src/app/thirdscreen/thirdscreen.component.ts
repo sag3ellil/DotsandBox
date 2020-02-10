@@ -129,12 +129,12 @@ ngOnDestroy()
         alert(" equality !!")
       }
 //to delete all the checked box saved  on the previous game
-      this.firebaseService.removeChecked().subscribe(a=>{
+      this.firebaseService.removeChecked(this.idGame).subscribe(a=>{
         console.log("remove checked",a.length)
 
          for(var i=0;i <a.length;i++)
          {
-           this.firebaseService.deleteChecked(a[i].id).then(function() {
+           this.firebaseService.deleteChecked(this.idGame,a[i].id).then(function() {
             console.log("Document successfully deleted!");
         }).catch(function(error) {
             console.error("Error removing document: ", error);
@@ -146,12 +146,12 @@ ngOnDestroy()
           console.log("no checked")
          )
    //to delete all the ligne saved  on the previous game
-   this.firebaseService.removeLine().subscribe(a=>{
+   this.firebaseService.removeLine( this.idGame).subscribe(a=>{
     console.log("remove lines",a.length)
 
         for(var i=0;i <a.length;i++)
         {
-          this.firebaseService.deleteLine(a[i].id).then(function() {
+          this.firebaseService.deleteLine(this.idGame,a[i].id).then(function() {
             console.log("Document successfully deleted!");
         }).catch(function(error) {
             console.error("Error removing document: ", error);
@@ -362,7 +362,7 @@ ngOnDestroy()
       console.log("json checked",JSON.parse(ch))
         this.checked.idchecked=JSON.parse(ch).idchecked
         this.checked.player=JSON.parse(ch).player
-      this.firebaseService.saveChecked(this.checked).then(()=>
+      this.firebaseService.saveChecked(this.idGame,this.checked).then(()=>
       console.log('saved checked'))
     }
 
@@ -373,7 +373,7 @@ ngOnDestroy()
         console.log('lines,',this.Lines )
         this.Line.idline=id
 
-        this.firebaseService.saveLine(this.Line).then(()=>
+        this.firebaseService.saveLine( this.idGame,this.Line).then(()=>
         console.log('saved'))
     }
 
@@ -382,7 +382,7 @@ public x:Array<CheckedModel>=[]
 
 getCheckedDB()
 {
-  this.firebaseService.getCheckeds().subscribe(dataChecked => {
+  this.firebaseService.getCheckeds(this.idGame).subscribe(dataChecked => {
   console.log(dataChecked) ;
    for(var i =0;i<dataChecked.length;i++)
    {
@@ -395,7 +395,7 @@ getCheckedDB()
 }
     getLinesDB()
       {
-        this.firebaseService.getLines().subscribe(dataLines => {
+        this.firebaseService.getLines(this.idGame).subscribe(dataLines => {
         console.log(dataLines) ;
          for(var i =0;i<dataLines.length;i++)
          {
@@ -405,7 +405,9 @@ getCheckedDB()
          
         });
       }
-public key:any;
+
+
+     public key:any;
     Checkbox(line)
     {console.log('c',this.c)
       var linedb=this.getLinesDB()
@@ -583,7 +585,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
         console.log(this.c[i]); 
 
       }
-
+   let a=false
       if(achb==true && bchb==true && cchb==true){
                   var id=line.x1+30
                   var id1=line.y1+40
@@ -597,7 +599,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                
                   console.log('ddd',this.key)
                   this.saveChecked()
-                  return true
+                 a= true
 
                 }
 
@@ -617,7 +619,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                 
                   console.log('ddd',this.key)
                   this.saveChecked()
-                  return true
+                  a= true
                 }
 
                 if(acvr==true && bcvr==true && ccvr==true){
@@ -634,7 +636,7 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                
                   console.log('ddd',this.key)
                   this.saveChecked()
-                  return true
+                  a= true
                 }
 
 
@@ -653,9 +655,9 @@ if(this.c[i].x1== cvr.x1 && this.c[i].x2== cvr.x2 && this.c[i].y1== cvr.y1 && th
                 
            
                   this.saveChecked()
-                  return true
+                  a= true
                 }
-          return false
+          return a
     }
  
   

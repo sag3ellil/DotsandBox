@@ -44,9 +44,9 @@ export class FirebaseService {
       });
     }
 
-    saveChecked(checked: CheckedModel): Promise<DocumentReference> {
+    saveChecked(idGame:string,checked: CheckedModel): Promise<DocumentReference> {
 
-      return this.afs.collection('/checked').add({
+      return this.afs.collection('/checked'+idGame).add({
        
         idchecked: checked.idchecked,
         player: checked.player,
@@ -57,9 +57,9 @@ export class FirebaseService {
 
    
    
-    saveLine(line: LineModel): Promise<DocumentReference> {
+    saveLine(idgame:string, line: LineModel): Promise<DocumentReference> {
            
-      return this.afs.collection('/lines').add({
+      return this.afs.collection('/lines'+idgame).add({
        
         x1: line.x1,
         x2: line.x2,
@@ -71,9 +71,9 @@ export class FirebaseService {
       });
     }
   
-    getLines(): Observable<LineModel[]> {
+    getLines(idgame:string): Observable<LineModel[]> {
 
-      return this.afs.collection('/lines').snapshotChanges()
+      return this.afs.collection('/lines'+idgame).snapshotChanges()
         .pipe(map(res => {
   
           this.resultRAW = res;
@@ -96,9 +96,9 @@ export class FirebaseService {
 
 
 
-    getCheckeds(): Observable<CheckedModel[]> {
+    getCheckeds(idgame:string): Observable<CheckedModel[]> {
 
-      return this.afs.collection('/checked').snapshotChanges()
+      return this.afs.collection('/checked'+idgame).snapshotChanges()
         .pipe(map(res => {
   
           this.resultRAW = res;
@@ -182,18 +182,18 @@ export class FirebaseService {
       return this.afs.collection('/game').doc(id).delete();
     }
 
-    deleteLine(id: string): Promise<void>
+    deleteLine(idgame:string,id: string): Promise<void>
     {
-      return this.afs.collection('/lines').doc(id).delete();
+      return this.afs.collection('/lines'+idgame).doc(id).delete();
     }
 
-    deleteChecked(id: string): Promise<void>
+    deleteChecked(idgame:string,id: string): Promise<void>
     {
-      return this.afs.collection('/checked').doc(id).delete();
+      return this.afs.collection('/checked'+idgame).doc(id).delete();
     }
-    removeChecked(): Observable<CheckedModel[]> {
+    removeChecked(idgame:string): Observable<CheckedModel[]> {
 
-      return this.afs.collection('/checked').snapshotChanges()
+      return this.afs.collection('/checked'+idgame).snapshotChanges()
         .pipe(map(res => {
   
           this.resultRAW = res;
@@ -214,13 +214,12 @@ export class FirebaseService {
         }));
     }
     
-    removeLine(): Observable<LineModel[]> {
+    removeLine(idgame:string): Observable<LineModel[]> {
 
-      return this.afs.collection('/lines').snapshotChanges()
+      return this.afs.collection('/lines'+idgame).snapshotChanges()
         .pipe(map(res => {
   
           this.resultRAW = res;
-  
           return this.resultObservable = this.resultRAW.map(gameData => {
             var a= new LineModel(
               gameData.payload.doc.id,
